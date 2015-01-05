@@ -1,0 +1,67 @@
+## GNOME PolicyKit and Keyring
+eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
+
+## Set root window colour
+hsetroot -solid "#2E3436" &
+
+## Group start:
+## 1. nitrogen - restores wallpaper
+## 2. sleep - give compositor time to start
+## 3. tint2 panel
+(\
+nitrogen --restore && \
+sleep 2s && \
+tint2 \
+) &
+
+## Volume control for systray
+(sleep 2s && pnmixer) &
+
+## Volume keys daemon
+xfce4-volumed &
+
+## Enable power management
+xfce4-power-manager &
+
+## Start Thunar Daemon
+#thunar --daemon &
+
+
+## Start xscreensaver
+xscreensaver -no-splash &
+
+## Start Clipboard manager
+(sleep 3s && clipit) &
+
+## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
+## Adjust the values according to your preferances.
+xset r rate 250 25 &
+
+## Turn on/off system beep
+xset b off &
+
+# Display Settings
+# I'm using a Full HD screen on the Mini DisplayPort of my MacBook
+# At work and at home. So use this as default
+# --auto --off should assure that the laptop screen will be used if nothing else is found
+#xrandr --output HDMI1 --mode 1920x1080
+#xrandr --output LVDS --auto --off
+xrandr --output HDMI-0  --right-of VGA-0
+#xrandr --output HDMI1  --right-of VGA1
+
+## Run the conky
+#conky -q &
+
+
+# Compositor to the end. If this one's started in the group before, the icons in my taskbar
+# have glitches
+#cb-compositor --start &
+
+#compton -c -r 16 -l -24 -t -12 -G -b &
+
+#nm-applet &
+
+launchy &
+
+ssh-add ~/.ssh/id_rsa_aseo &
+
